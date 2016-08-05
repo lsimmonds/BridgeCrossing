@@ -6,7 +6,6 @@
 package com.leonsimmonds.bridgecrossing;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,8 +30,8 @@ public class BridgeCrossing {
         travelers.add(new Traveler(1));
         this.name = name;
     }
-
-    public void goOver(Traveler person1, Traveler person2) {
+    
+    private void goOver(Traveler person1, Traveler person2) {
         if (person1.isOver() || person2.isOver()) {
             System.out.println("Persons must both not be over to goOver");
             return;
@@ -46,7 +45,7 @@ public class BridgeCrossing {
         totalTime += goStep.getTime();
     }
 
-    public void goBack(Traveler person) {
+    private void goBack(Traveler person) {
         if (!person.isOver()) {
             System.out.println("Person must be over to goBack");
         }
@@ -65,12 +64,7 @@ public class BridgeCrossing {
      * @return sum of travel times
      */
     public int makeTestingTrip() {
-        travelers.sort(new Comparator<Traveler>() {
-            @Override
-            public int compare(Traveler person1, Traveler person2) {
-                return person1.getTravelTime() - person2.getTravelTime();
-            }
-        });
+        travelers.sort((Traveler person1, Traveler person2) -> person1.getTravelTime() - person2.getTravelTime());
         goOver(travelers.get(0), travelers.get(1));
         goBack(travelers.get(0));
         goOver(travelers.get(2), travelers.get(3));
@@ -79,19 +73,19 @@ public class BridgeCrossing {
         return totalTime;
     }
 
-    public List<Integer> getOvers() {
+    private List<Integer> getOvers() {
         List<Integer> overs = IntStream.range(0, travelers.size()).filter(i -> travelers.get(i).isOver()).
             collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
         return overs;
     }
 
-    public List<Integer> getNotOvers() {
+    private List<Integer> getNotOvers() {
         List<Integer> notOvers = IntStream.range(0, travelers.size()).filter(i -> !travelers.get(i).isOver()).
             collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
         return notOvers;
     }
 
-    public BridgeCrossing copy() {
+    private BridgeCrossing copy() {
         BridgeCrossing tempCrossing = new BridgeCrossing("Copy of " + this.name);
         IntStream.range(0, this.travelers.size()).forEach(i -> {
             tempCrossing.travelers.get(i).setTravelTime(this.travelers.get(i).getTravelTime());
@@ -185,6 +179,30 @@ public class BridgeCrossing {
         return perm1.totalTime;
     }
 
+    public int getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    } 
+    
+    public List<Traveler> getTravelers() {
+        return travelers;
+    }
+
+    public List<TripStep> getTripLog() {
+        return tripLog;
+    }
+
     public static void main(String[] args) {
         BridgeCrossing test1 = new BridgeCrossing("test1");
         System.out.println("Testing Trip time: " + test1.makeTestingTrip());
@@ -210,6 +228,7 @@ public class BridgeCrossing {
         } else {
             System.out.println("Test algorithm produced the best time! " + test1.totalTime);
         }
+        
     }
 
     class Traveler {
