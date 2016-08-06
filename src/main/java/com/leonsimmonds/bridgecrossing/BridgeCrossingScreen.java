@@ -5,7 +5,6 @@
  */
 package com.leonsimmonds.bridgecrossing;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -16,11 +15,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -119,9 +116,7 @@ public class BridgeCrossingScreen extends JFrame {
 				detailWindow.setSize(1000, 600);
 				detailWindow.setLocation(120, 100);
 				JTextArea textArea = new JTextArea();
-//				textArea.setColumns(20);
 				textArea.setLineWrap(true);
-//				textArea.setRows(5);
 				textArea.setWrapStyleWord(true);
 				JScrollPane jScrollPane1 = new JScrollPane(textArea);
 				jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
