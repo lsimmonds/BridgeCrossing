@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
+import javax.swing.JTextField;
+
 /**
  *
  * @author lsimmonds
@@ -28,6 +30,14 @@ public class BridgeCrossing {
         travelers.add(new Traveler(5));
         travelers.add(new Traveler(2));
         travelers.add(new Traveler(1));
+        this.name = name;
+    }
+    
+    public BridgeCrossing(String name, JTextField[] values) {
+        travelers.add(new Traveler(Integer.valueOf(values[0].getText())));
+        travelers.add(new Traveler(Integer.valueOf(values[1].getText())));
+        travelers.add(new Traveler(Integer.valueOf(values[2].getText())));
+        travelers.add(new Traveler(Integer.valueOf(values[3].getText())));
         this.name = name;
     }
     
@@ -102,26 +112,27 @@ public class BridgeCrossing {
         switch (step) {
             case 0:
                 //NO,NO,NO,NO
+                BridgeCrossing perm2 = perm1.copy();
+                BridgeCrossing perm3 = perm1.copy();
+                BridgeCrossing perm4 = perm1.copy();
+                BridgeCrossing perm5 = perm1.copy();
+                BridgeCrossing perm6 = perm1.copy();
+                
                 perm1.goOver(perm1.travelers.get(0), perm1.travelers.get(1));
                 makeAllTrips(perm1, 1, allRuns);
 
-                BridgeCrossing perm2 = new BridgeCrossing("Perm2");
                 perm2.goOver(perm2.travelers.get(0), perm2.travelers.get(2));
                 makeAllTrips(perm2, 1, allRuns);
 
-                BridgeCrossing perm3 = new BridgeCrossing("Perm3");
                 perm3.goOver(perm3.travelers.get(0), perm3.travelers.get(3));
                 makeAllTrips(perm3, 1, allRuns);
 
-                BridgeCrossing perm4 = new BridgeCrossing("Perm4");
                 perm4.goOver(perm4.travelers.get(1), perm4.travelers.get(2));
                 makeAllTrips(perm4, 1, allRuns);
 
-                BridgeCrossing perm5 = new BridgeCrossing("Perm5");
                 perm5.goOver(perm5.travelers.get(1), perm5.travelers.get(3));
                 makeAllTrips(perm5, 1, allRuns);
 
-                BridgeCrossing perm6 = new BridgeCrossing("Perm6");
                 perm6.goOver(perm6.travelers.get(2), perm6.travelers.get(3));
                 makeAllTrips(perm6, 1, allRuns);
                 break;
@@ -201,34 +212,6 @@ public class BridgeCrossing {
 
     public List<TripStep> getTripLog() {
         return tripLog;
-    }
-
-    public static void main(String[] args) {
-        BridgeCrossing test1 = new BridgeCrossing("test1");
-        System.out.println("Testing Trip time: " + test1.makeTestingTrip());
-        System.out.println("Tip Log: " + test1.tripLog.toString());
-
-        BridgeCrossing test2 = new BridgeCrossing("Perm1");
-        List<BridgeCrossing> allRuns = new ArrayList<>();
-        makeAllTrips(test2, 0, allRuns);
-        AtomicInteger minTime = new AtomicInteger((test2.travelers.get(0).getTravelTime() + test2.travelers.get(1).getTravelTime() + test2.travelers.get(2).getTravelTime()
-            + test2.travelers.get(3).getTravelTime()) * 2);
-        allRuns.forEach(crossingRun -> {
-            System.out.println("Run " + crossingRun.name + " travelers: " + crossingRun.travelers);
-            IntStream.range(0, crossingRun.tripLog.size()).forEach(i -> {
-                System.out.println("    Step " + i + ": " + crossingRun.tripLog.get(i));
-            });
-            System.out.println("Run " + crossingRun.name + " totalTime: " + crossingRun.totalTime);
-            if (crossingRun.totalTime < minTime.get()) {
-                minTime.getAndSet(crossingRun.totalTime);
-            }
-        });
-        if (minTime.get() < test1.totalTime) {
-            System.out.println("Test algorithm failed!!!! Does not produce fastest time! (" + minTime.get() + " vs. " + test1.totalTime + ")");
-        } else {
-            System.out.println("Test algorithm produced the best time! " + test1.totalTime);
-        }
-        
     }
 
     class Traveler {

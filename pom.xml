@@ -23,7 +23,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.leonsimmonds.bridgecrossing.BridgeCrossing</mainClass>
+                            <mainClass>com.leonsimmonds.bridgecrossing.BridgeCrossingScreen</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
