@@ -131,32 +131,5 @@ public class BridgeCrossingScreen extends JFrame {
 	public static void main(String[] args) {
 		JFrame bridgeCrossingwindow = new BridgeCrossingScreen();
 		bridgeCrossingwindow.setVisible(true);
-
-		BridgeCrossing test1 = new BridgeCrossing("test1");
-		System.out.println("Testing Trip time: " + test1.makeTestingTrip());
-		System.out.println("Tip Log: " + test1.getTripLog().toString());
-
-		BridgeCrossing test2 = new BridgeCrossing("Perm1");
-		List<BridgeCrossing> allRuns = new ArrayList<>();
-		BridgeCrossing.makeAllTrips(test2, 0, allRuns);
-		StringBuilder testRunDetails = new StringBuilder();
-		AtomicInteger minTime = new AtomicInteger((test2.getTravelers().get(0).getTravelTime() + test2.getTravelers().get(1).getTravelTime()
-				+ test2.getTravelers().get(2).getTravelTime() + test2.getTravelers().get(3).getTravelTime()) * 2);
-		allRuns.forEach(crossingRun -> {
-			testRunDetails.append("Run " + crossingRun.getName() + " travelers: " + crossingRun.getTravelers());
-			IntStream.range(0, crossingRun.getTripLog().size()).forEach(i -> {
-				testRunDetails.append("    Step " + i + ": " + crossingRun.getTripLog().get(i));
-			});
-			testRunDetails.append("Run " + crossingRun.getName() + " totalTime: " + crossingRun.getTotalTime());
-			if (crossingRun.getTotalTime() < minTime.get()) {
-				minTime.getAndSet(crossingRun.getTotalTime());
-			}
-		});
-		if (minTime.get() < test1.getTotalTime()) {
-			System.out.println("Test algorithm failed!!!! Does not produce fastest time! (" + minTime.get() + " vs. " + test1.getTotalTime() + ")");
-		} else {
-			System.out.println("Test algorithm produced the best time! " + test1.getTotalTime());
-		}
-
 	}
 }
