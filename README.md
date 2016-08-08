@@ -26,7 +26,7 @@ To run:
 * Checkout project in some dir
 * cd to that dir
 * run mvn clean install <- you will need mvn installed, of course
-* run java -jar <whatever jar mvn built for you>
+* run java -jar \<whatever jar mvn built for you\>
 
 
 
